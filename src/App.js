@@ -1,25 +1,60 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Dashboard from './components/Dashboard/Dashboard';
+import MapView from './components/MapView/MapView';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true', // Persists login state
+  };
+
+  handleLogin = (status) => {
+    this.setState({ isLoggedIn: status });
+    localStorage.setItem('isLoggedIn', status); // Store login state
+  };
+
+  render() {
+    const { isLoggedIn } = this.state;
+    
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Login onLogin={this.handleLogin} />
+              )
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              isLoggedIn ? (
+                <Dashboard isLoggedIn={isLoggedIn} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              isLoggedIn ? (
+                <MapView isLoggedIn={isLoggedIn} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+        </Routes>
+      </Router>
+    );
+  }
 }
 
 export default App;

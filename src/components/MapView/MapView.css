@@ -1,0 +1,21 @@
+.map-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+  
+.map-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+  
+.leaflet-container {
+  background-color: #e5e5e5 !important;
+}
+
+.auth-error {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: #ff4444;
+}
