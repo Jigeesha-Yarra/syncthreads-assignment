@@ -7,12 +7,12 @@ import './App.css';
 
 class App extends Component {
   state = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true', // Persists login state
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
   };
 
   handleLogin = (status) => {
     this.setState({ isLoggedIn: status });
-    localStorage.setItem('isLoggedIn', status); // Store login state
+    localStorage.setItem('isLoggedIn', status);
   };
 
   render() {
@@ -22,7 +22,7 @@ class App extends Component {
       <Router basename="/syncthreads-assignment">
         <Routes>
           <Route
-            path="/"
+            index
             element={
               isLoggedIn ? (
                 <Navigate to="/dashboard" replace />
@@ -32,25 +32,18 @@ class App extends Component {
             }
           />
           <Route
-            path="/dashboard"
+            path="dashboard"
             element={
-              isLoggedIn ? (
-                <Dashboard isLoggedIn={isLoggedIn} />
-              ) : (
-                <Navigate to="/" replace />
-              )
+              isLoggedIn ? <Dashboard isLoggedIn={isLoggedIn} /> : <Navigate to="/" replace />
             }
           />
           <Route
-            path="/map"
+            path="map"
             element={
-              isLoggedIn ? (
-                <MapView isLoggedIn={isLoggedIn} />
-              ) : (
-                <Navigate to="/" replace />
-              )
+              isLoggedIn ? <MapView isLoggedIn={isLoggedIn} /> : <Navigate to="/" replace />
             }
           />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     );
