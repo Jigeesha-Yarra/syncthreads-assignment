@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import MapView from './components/MapView/MapView';
@@ -19,7 +19,7 @@ class App extends Component {
     const { isLoggedIn } = this.state;
     
     return (
-      <Router>
+      <Router basename="/syncthreads-assignment">
         <Routes>
           <Route
             path="/"
