@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import MapView from './components/MapView/MapView';
@@ -7,22 +7,22 @@ import './App.css';
 
 class App extends Component {
   state = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true', // Persists login state
   };
 
   handleLogin = (status) => {
     this.setState({ isLoggedIn: status });
-    localStorage.setItem('isLoggedIn', status);
+    localStorage.setItem('isLoggedIn', status); // Store login state
   };
 
   render() {
     const { isLoggedIn } = this.state;
     
     return (
-      <Router basename="/syncthreads-assignment">
+      <Router>
         <Routes>
           <Route
-            index
+            path="/"
             element={
               isLoggedIn ? (
                 <Navigate to="/dashboard" replace />
@@ -32,18 +32,25 @@ class App extends Component {
             }
           />
           <Route
-            path="dashboard"
+            path="/dashboard"
             element={
-              isLoggedIn ? <Dashboard isLoggedIn={isLoggedIn} /> : <Navigate to="/" replace />
+              isLoggedIn ? (
+                <Dashboard isLoggedIn={isLoggedIn} />
+              ) : (
+                <Navigate to="/" replace />
+              )
             }
           />
           <Route
-            path="map"
+            path="/map"
             element={
-              isLoggedIn ? <MapView isLoggedIn={isLoggedIn} /> : <Navigate to="/" replace />
+              isLoggedIn ? (
+                <MapView isLoggedIn={isLoggedIn} />
+              ) : (
+                <Navigate to="/" replace />
+              )
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     );
